@@ -1,0 +1,174 @@
+[
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxxhdpi_ic_action_usuario.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxxhdpi/ic_action_usuario.png"
+    },
+    {
+        "merged": "com.example.firebase.app-debug-68:/drawable_equipo_imagen_1.png.flat",
+        "source": "com.example.firebase.app-main-70:/drawable/equipo_imagen_1.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxhdpi_ic_action_evento.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxhdpi/ic_action_evento.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/xml_backup_rules.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-hdpi_ic_action_evento.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-hdpi/ic_action_evento.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-hdpi_ic_action_equipo.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-hdpi/ic_action_equipo.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxhdpi_ic_action_equipo.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxhdpi/ic_action_equipo.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-hdpi_ic_action_usuario.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-hdpi/ic_action_usuario.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-mdpi_ic_action_usuario.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-mdpi/ic_action_usuario.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxhdpi_ic_action_usuario.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxhdpi/ic_action_usuario.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.firebase.app-debug-68:/drawable_equipo_imagen_3.png.flat",
+        "source": "com.example.firebase.app-main-70:/drawable/equipo_imagen_3.png"
+    },
+    {
+        "merged": "com.example.firebase.app-debug-68:/drawable_equipo_imagen_2.png.flat",
+        "source": "com.example.firebase.app-main-70:/drawable/equipo_imagen_2.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable_maat.PNG.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable/maat.PNG"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/xml_data_extraction_rules.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxxhdpi_ic_action_equipo.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxxhdpi/ic_action_equipo.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable_google.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable/google.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-mdpi_ic_action_equipo.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-mdpi/ic_action_equipo.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable_facebook.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable/facebook.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-hdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xhdpi_ic_action_equipo.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xhdpi/ic_action_equipo.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xxxhdpi_ic_action_evento.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xxxhdpi/ic_action_evento.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-mdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xhdpi_ic_action_evento.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xhdpi/ic_action_evento.png"
+    },
+    {
+        "merged": "com.example.firebase.app-debug-68:/drawable_equipo_imagen_4.png.flat",
+        "source": "com.example.firebase.app-main-70:/drawable/equipo_imagen_4.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-mdpi_ic_action_evento.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-mdpi/ic_action_evento.png"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-debug-68:/drawable-xhdpi_ic_action_usuario.png.flat",
+        "source": "/Users/ruben/.gradle/daemon/8.11.1/com.example.firebase.app-main-70:/drawable-xhdpi/ic_action_usuario.png"
+    }
+]
