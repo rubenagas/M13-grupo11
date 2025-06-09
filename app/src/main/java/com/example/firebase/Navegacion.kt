@@ -9,8 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.firebase.presentacion.autentificacion.LoginPantalla
 import com.example.firebase.presentacion.autentificacion.RecuperarPantalla
-import com.example.firebase.presentacion.autentificacion.SignUpPantalla
-import com.example.firebase.presentacion.equipo.EquipoPantalla
+import com.example.firebase.presentacion.autentificacion.RegistroPantalla
+import com.example.firebase.presentacion.autentificacion.RolPantalla
+//import com.example.firebase.presentacion.equipo.EquipoPantalla
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.inicio.InicioPantalla
 import com.example.firebase.presentacion.perfil.PerfilPantalla
@@ -24,6 +25,8 @@ object Rutas {
     const val Eventos = "eventos"
     const val Equipo = "equipo"
     const val Recuperar = "recuperar"
+    const val Rol = "rol"
+
 }
 
 @Composable
@@ -51,7 +54,7 @@ fun Navegacion(navHostController: NavHostController) {
                 LoginPantalla(navController = navHostController)
             }
             composable(Rutas.SignUp) {
-                SignUpPantalla(navController = navHostController)
+                RegistroPantalla(navController = navHostController)
             }
 
             composable(Rutas.Recuperar) {
@@ -65,9 +68,14 @@ fun Navegacion(navHostController: NavHostController) {
             composable(Rutas.Eventos) {
                 EventosPantalla(navController = navHostController)
             }
-            composable(Rutas.Equipo) {
-                EquipoPantalla(navController = navHostController)
+
+            composable(Rutas.Rol) {
+                RolPantalla(navController = navHostController)
             }
+
+/*            composable(Rutas.Equipo) {
+                EquipoPantalla(navController = navHostController)
+            }*/
         }
     }
 }
