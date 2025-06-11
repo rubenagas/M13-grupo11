@@ -8,8 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.findNavController
 import com.example.firebase.ui.theme.FirebaseTheme
 import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
 
@@ -18,6 +20,7 @@ class MainActivity : ComponentActivity() {
 
         // Inicializar Firebase
         FirebaseApp.initializeApp(this)
+
 
         setContent {
             val navController = rememberNavController()
@@ -32,5 +35,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+       // var botoninicio = findNavController(@)
+
     }
 }

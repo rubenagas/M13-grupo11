@@ -2,24 +2,11 @@ package com.example.firebase.presentacion.inicio
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -41,7 +30,6 @@ import com.example.firebase.ui.theme.DarkIndigo
 import com.example.firebase.ui.theme.Grey
 import com.example.firebase.ui.theme.MidnightBlue
 import com.example.firebase.ui.theme.Surface
-
 
 @Composable
 fun InicioPantalla(navController: NavHostController) {
@@ -67,65 +55,16 @@ fun InicioPantalla(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
-// copiar hasta el spacer
-            Text(
-                text = "MA·AT",
-                color = Yellow,
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold
-            )
+
+            LogoTitulo()
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            Image(
-                painter = painterResource(id = R.drawable.maat),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .width(180.dp)
-                    .padding(10.dp)
-            )
-
-            Spacer(modifier = Modifier.height(screenHeight * 0.05f))
-
-            Text(
-                text = "Bienvenidos",
-                color = Yellow,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                "Confía en MA·AT y organicemos tus eventos",
-                color = White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+            TextoBienvenida()
 
             Spacer(modifier = Modifier.height(screenHeight * 0.08f))
 
-            Button(
-                onClick = {  navController.navigate("login") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkIndigo)
-            ) {
-                Text(text = "Iniciar Sesión", color = Surface)
-            }
-
-
-            Spacer(modifier = Modifier.height(screenHeight * 0.02f))
-
-            Button(
-                onClick = { navController.navigate("registro") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkIndigo)
-            ) {
-                Text(text = "Registrate", color = Surface)
-            }
+            BotonesInicio(navController)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -133,12 +72,74 @@ fun InicioPantalla(navController: NavHostController) {
                 modifier = Modifier.padding(bottom = screenHeight * 0.08f),
                 painter = painterResource(id = R.drawable.google),
                 title = "Continuar con Google",
-                onClick = { /*logica */}
+                onClick = { /* lógica */ }
             )
         }
     }
 }
 
+@Composable
+fun LogoTitulo() {
+    Text(
+        text = "MA·AT",
+        color = Yellow,
+        fontSize = 40.sp,
+        fontWeight = FontWeight.Bold
+    )
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    Image(
+        painter = painterResource(id = R.drawable.maat),
+        contentDescription = "Logo",
+        modifier = Modifier
+            .width(180.dp)
+            .padding(10.dp)
+    )
+}
+
+@Composable
+fun TextoBienvenida() {
+    Text(
+        text = "Bienvenidos",
+        color = Yellow,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold
+    )
+
+    Text(
+        text = "Confía en MA·AT y organicemos tus eventos",
+        color = White,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+fun BotonesInicio(navController: NavHostController) {
+    Button(
+        onClick = { navController.navigate("login") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = DarkIndigo)
+    ) {
+        Text(text = "Iniciar Sesión", color = Surface)
+    }
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(
+        onClick = { navController.navigate("registro") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = DarkIndigo)
+    ) {
+        Text(text = "Registrate", color = Surface)
+    }
+}
 
 @Composable
 fun BotonGoogle(
@@ -146,15 +147,14 @@ fun BotonGoogle(
     painter: Painter,
     title: String,
     onClick: () -> Unit
-){
-
+) {
     ElevatedButton(
         onClick = onClick,
-        modifier =  modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 32.dp),
-            shape = CircleShape,
-            colors =ButtonDefaults.buttonColors(containerColor = DarkIndigo),
+        shape = CircleShape,
+        colors = ButtonDefaults.buttonColors(containerColor = DarkIndigo)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -178,7 +178,8 @@ fun BotonGoogle(
     }
 }
 
-// composable para la visualizacion. preview sioin parametros
+// composable para la visualizacion (preview) sin necesidad de iniciar el emulador
+@PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable
 fun PreviewEventosPantalla() {
