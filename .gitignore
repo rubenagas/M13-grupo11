@@ -16,3 +16,4 @@ local.properties
 app/google-services.json
 misc.xml
 .idea
+/gradle/libs.versions.toml
