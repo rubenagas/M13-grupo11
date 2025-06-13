@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-       // var botoninicio = findNavController(@)
+
 
     }
 }
