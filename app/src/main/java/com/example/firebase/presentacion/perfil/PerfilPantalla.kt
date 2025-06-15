@@ -46,6 +46,7 @@ import java.nio.file.WatchEvent
 
 
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun PerfilPantalla(navController: NavHostController){
     BoxWithConstraints(
@@ -66,7 +67,6 @@ fun PerfilPantalla(navController: NavHostController){
         Mainscreen()
         Spacer(modifier = Modifier.height(screenHeight * 0.28f))
         FooterPerfil()
-
     }
 
 }
