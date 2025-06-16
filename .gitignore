@@ -19,3 +19,4 @@ misc.xml
 /gradle/libs.versions.toml
 /app/generated/res/injectCrashlyticsMappingFileIdDebug
 app/src/main/res/values/strings.xml
+app/proguard-rules.pro
