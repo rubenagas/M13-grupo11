@@ -17,3 +17,5 @@ app/google-services.json
 misc.xml
 .idea
 /gradle/libs.versions.toml
+/app/generated/res/injectCrashlyticsMappingFileIdDebug
+app/src/main/res/values/strings.xml
