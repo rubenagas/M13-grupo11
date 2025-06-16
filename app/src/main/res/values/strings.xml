@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">firebase</string>
+    <!-- esto al gitignore porque son claves de seguridad-->
+    <string name="android_cliente" >286765402618-os9i9inpsbqiarlggsak0vns2bmudesr.apps.googleusercontent.com</string>
 </resources>

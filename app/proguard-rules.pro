@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#util si se encunetra el Credential Manager y en el Proguard hace que ( en la segunda linea)
+#no toque nada de la carpeta playservices q usa CredentialManager
+-if class androidx.credentials.CredentialManager
+-keep class androidx.credentials.playservices.** {
+        *;
+    }
+

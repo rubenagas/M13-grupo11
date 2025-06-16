@@ -3,9 +3,11 @@ package com.example.firebase.presentacion.autentificacion
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,16 +32,14 @@ import com.example.firebase.data.AuthService
 import com.example.firebase.data.firebase.FirestoreService
 import com.example.firebase.data.modelo.Usuario
 
-
-
 @Composable
 fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
     val context = if (!isPreview) LocalContext.current else null
 
     var nombre by remember { mutableStateOf("") }
-    var anioNacimiento by remember { mutableStateOf<String?>(null) }
+    var anNacimiento by remember { mutableStateOf<String?>(null) }
     var rolSeleccionado by remember { mutableStateOf<String?>(null) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var mensajeError by remember { mutableStateOf<String?>(null) }
 
     BoxWithConstraints(
         modifier = Modifier
@@ -53,29 +53,42 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
             )
     ) {
         val screenHeight = maxHeight
+        val scrollState = rememberScrollState()
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
+            // Título + botón atrás
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Volver",
+                        tint = Yellow
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Completa tu perfil",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Yellow
+                )
+            }
+
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            Text(
-                text = "Completa tu perfil",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Yellow,
-                modifier = Modifier.align(Alignment.Start)
-            )
+            TextoNombre(nombre) { nombre = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CampoTextoNombre(nombre) { nombre = it }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            DropdownAnoNacimiento(anioNacimiento) { anioNacimiento = it }
+            Nacimiento(anNacimiento) { anNacimiento = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -87,12 +100,12 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
                 onClick = {
                     val user = AuthService.usuarioActual()
                     if (user == null) {
-                        errorMessage = "No se encontró el usuario autenticado"
+                        mensajeError = "No se ha encontrado a el usuario autenticado"
                         return@Button
                     }
 
-                    if (nombre.isBlank() || anioNacimiento.isNullOrBlank() || rolSeleccionado.isNullOrBlank()) {
-                        errorMessage = "Por favor completa todos los campos"
+                    if (nombre.isBlank() || anNacimiento.isNullOrBlank() || rolSeleccionado.isNullOrBlank()) {
+                        mensajeError = "Por favor, complete todos los campos"
                         return@Button
                     }
 
@@ -101,17 +114,17 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
                         nombre = nombre,
                         correo = user.email ?: "",
                         rol = rolSeleccionado!!,
-                        anioNacimiento = anioNacimiento!!
+                        anioNacimiento = anNacimiento!!
                     )
 
                     FirestoreService.guardarUsuario(
                         usuario,
                         onSuccess = {
-                            Toast.makeText(context, "Perfil guardado con éxito", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "El perfil se ha guardado con éxito", Toast.LENGTH_SHORT).show()
                             navController.navigate("perfil")
                         },
                         onError = {
-                            errorMessage = "Error al guardar el perfil: ${it.message}"
+                            mensajeError = "Error al guardar el perfil: ${it.message}"
                         }
                     )
                 },
@@ -123,19 +136,21 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            errorMessage?.let {
+            mensajeError?.let {
                 Text(
                     text = it,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
 
 @Composable
-fun CampoTextoNombre(nombre: String, onCambio: (String) -> Unit) {
+fun TextoNombre(nombre: String, onCambio: (String) -> Unit) {
     Text(text = "Nombre", color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
     TextField(
@@ -146,41 +161,33 @@ fun CampoTextoNombre(nombre: String, onCambio: (String) -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownAnoNacimiento(anioSeleccionado: String?, onSeleccion: (String) -> Unit) {
-    var expanded by remember { mutableStateOf(false) }
-    val anios = (2025 downTo 1920).map { it.toString() }
+fun Nacimiento(anioSelc: String?, onSeleccion: (String) -> Unit) {
+    var xpan by remember { mutableStateOf(false) }
+    val anios = (2025 downTo 1940).map { it.toString() }
+    val selected = anioSelc ?: "Seleccione el año"
 
     Text(text = "Año de nacimiento", color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
-    ) {
-        TextField(
-            value = anioSeleccionado ?: "",
-            onValueChange = {},
-            readOnly = true,
-            placeholder = { Text("Selecciona el año") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .menuAnchor(),
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
-        )
+    Box {
+        OutlinedButton(
+            onClick = { xpan = true },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(selected, color = Color.White)
+        }
 
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
+        DropdownMenu(
+            expanded = xpan,
+            onDismissRequest = { xpan = false }
         ) {
             anios.forEach { anio ->
                 DropdownMenuItem(
                     text = { Text(anio) },
                     onClick = {
                         onSeleccion(anio)
-                        expanded = false
+                        xpan = false
                     }
                 )
             }
@@ -192,7 +199,7 @@ fun DropdownAnoNacimiento(anioSeleccionado: String?, onSeleccion: (String) -> Un
 fun SeleccionRol(rolSeleccionado: String?, onRolSeleccionado: (String) -> Unit) {
     Text(text = "Rol", color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
-    val roles = listOf("Jugador", "Entrenador/Máster", "Tesorero")
+    val roles = listOf("Jugador", "Entrenador", "Tesorero")
     roles.forEach { rol ->
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -213,7 +220,7 @@ fun SeleccionRol(rolSeleccionado: String?, onRolSeleccionado: (String) -> Unit) 
     }
 }
 
-@PreviewFontScale
+//@PreviewFontScale
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable

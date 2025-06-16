@@ -1,11 +1,14 @@
 package com.example.firebase.presentacion.autentificacion
 
+import androidx.compose.foundation.layout.Row
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,22 +63,22 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
         ) {
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            TituloPantalla("CREA UNA CUENTA")
-
+            TituloPantalla("CREA UNA CUENTA", navController)
+            
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            CampoTexto("Correo electrónico", email) { email = it }
+            BloqueRegistro("Correo electrónico", email) { email = it }
             Spacer(modifier = Modifier.height(16.dp))
 
-            CampoTexto("Contraseña", contrasena, esPassword = true) { contrasena = it }
+            BloqueRegistro("Contraseña", contrasena, esPassword = true) { contrasena = it }
             Spacer(modifier = Modifier.height(16.dp))
 
-            CampoTexto("Confirmar contraseña", confirmar, esPassword = true) { confirmar = it }
+            BloqueRegistro("Confirmar contraseña", confirmar, esPassword = true) { confirmar = it }
 
             Spacer(modifier = Modifier.height(screenHeight * 0.08f))
 
-            BotonContinuar {
-                if (isPreview) return@BotonContinuar
+            BottContinuar {
+                if (isPreview) return@BottContinuar
 
                 when {
                     email.isBlank() || contrasena.isBlank() || confirmar.isBlank() -> {
@@ -92,14 +94,12 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
                         error = "La contraseña debe tener al menos 6 caracteres"
                     }
                     else -> {
-                        AuthService.registrarConCorreo(
+                        AuthService.registrarCorreo(
                             email = email,
-                            password = contrasena,
+                            contraseña = contrasena,
                             onSuccess = {
-                                Toast.makeText(context, "Usuario registrado", Toast.LENGTH_LONG).show()
-
-                                //  Navegamos a la pantalla de selección de nombre y rol
-                                navController.navigate("rol")
+                                Toast.makeText(context, "Registro exitoso. Te hemos enviado un correo de verificación. Inicia sesión luego de confirmar.", Toast.LENGTH_LONG).show()
+                                navController.popBackStack() // Volver al login
                             },
                             onError = {
                                 error = it.message ?: "Error desconocido al registrar"
@@ -119,33 +119,52 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
 }
 
 @Composable
-fun TituloPantalla(texto: String) {
-    Text(
-        text = texto,
-        fontSize = 32.sp,
-        fontWeight = FontWeight.Bold,
-        color = Yellow,
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.Start)
-    )
+fun BotonAtras(navController: NavHostController){
+    IconButton(onClick = { navController.popBackStack()}) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "atras",
+            tint = Yellow
+        )
+    }
 }
 
 @Composable
-fun CampoTexto(etiqueta: String, valor: String, esPassword: Boolean = false, onCambio: (String) -> Unit) {
+fun TituloPantalla(texto: String, navController:NavHostController) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        BotonAtras(navController)
+        Spacer(modifier = Modifier.width(5.dp))
+        Text(
+            text = texto,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Yellow,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.Start)
+        )
+    }
+
+}
+
+@Composable
+fun BloqueRegistro(etiqueta: String, valor: String, esPassword: Boolean = false, onCambio: (String) -> Unit) {
     Text(text = etiqueta, color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
     TextField(
         value = valor,
         onValueChange = onCambio,
-        placeholder = { Text("Introduce $etiqueta".lowercase()) },
+        placeholder = { Text("$etiqueta") },
         visualTransformation = if (esPassword) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier.fillMaxWidth()
     )
 }
 
 @Composable
-fun BotonContinuar(onClick: () -> Unit) {
+fun BottContinuar(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -168,7 +187,7 @@ fun MensajeErrorRegistro(mensaje: String) {
     )
 }
 
-@PreviewFontScale
+//@PreviewFontScale
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable

@@ -1,9 +1,14 @@
 package com.example.firebase.presentacion.autentificacion
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,18 +20,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.firebase.data.AuthService
-//import com.example.firebase.data.firebase.AuthService
 import com.example.firebase.ui.theme.DarkIndigo
 import com.example.firebase.ui.theme.Grey
 import com.example.firebase.ui.theme.MidnightBlue
 import com.example.firebase.ui.theme.Surface
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun LoginPantalla(navController: NavHostController, isPreview: Boolean = false) {
@@ -53,59 +58,83 @@ fun LoginPantalla(navController: NavHostController, isPreview: Boolean = false) 
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
-            TituloLogin()
+            TituloLogin("INICIA SESIÓN", navController)
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
-            CampoEmail(email) { email = it }
+            Email(email) { email = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CampoPassword(password) { password = it }
+            Contrasena(password) { password = it }
 
             Spacer(modifier = Modifier.height(screenHeight * 0.08f))
 
-            BotonEntrar(
+            Entrar(
                 email = email,
                 password = password,
                 isPreview = isPreview,
                 context = context,
                 navController = navController,
-                onError = { errorMessage = it }
+                onError = { mensaje -> errorMessage = mensaje }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            errorMessage?.let {
-                MensajeError(it)
+            errorMessage?.let { MensajeError(it) }
+
+            Spacer(modifier = Modifier.height(screenHeight * 0.05f))
+
+            ContrasenaOlvidada {
+                if (!isPreview) navController.navigate("recuperar")
             }
 
-            Spacer(modifier = Modifier.height(screenHeight * 0.08f))
-
-            BotonOlvidoContrasena {
-                if (!isPreview) navController.navigate("registro")
-            }
+            Spacer(modifier = Modifier.height(24.dp)) // extra padding final
         }
+
+    }
+    }
+
+
+@Composable
+fun BotonAtrasL(navController: NavHostController){
+    IconButton(onClick = { navController.popBackStack()}) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "atras",
+            tint = Yellow
+        )
     }
 }
 
 @Composable
-fun TituloLogin() {
-    Text(
-        text = "INICIA SESIÓN",
-        fontSize = 32.sp,
-        fontWeight = FontWeight.Bold,
-        color = Yellow,
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally)
-    )
-}
+fun TituloLogin(texto: String, navController: NavHostController) {
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        BotonAtrasL(navController)
+        Spacer(modifier = Modifier.width(5.dp))
+        Text(
+            text = texto,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Yellow,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.Start)
+            )
+        }
+
+    }
+
 
 @Composable
-fun CampoEmail(email: String, onCambio: (String) -> Unit) {
+fun Email(email: String, onCambio: (String) -> Unit) {
     Text(text = "Correo electrónico", color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
     TextField(
@@ -117,7 +146,7 @@ fun CampoEmail(email: String, onCambio: (String) -> Unit) {
 }
 
 @Composable
-fun CampoPassword(password: String, onCambio: (String) -> Unit) {
+fun Contrasena(password: String, onCambio: (String) -> Unit) {
     Text(text = "Contraseña", color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
     TextField(
@@ -130,7 +159,7 @@ fun CampoPassword(password: String, onCambio: (String) -> Unit) {
 }
 
 @Composable
-fun BotonEntrar(
+fun Entrar(
     email: String,
     password: String,
     isPreview: Boolean,
@@ -145,16 +174,14 @@ fun BotonEntrar(
                 return@Button
             }
 
-            if (!isPreview) {
-                AuthService.loginConCorreo(
+            if (!isPreview && context != null) {
+                AuthService.loginCorreo(
                     email = email,
-                    password = password,
-                    onSuccess = {
-                        Toast.makeText(context, "Sesión iniciada", Toast.LENGTH_LONG).show()
-                        navController.navigate("eventos")
-                    },
+                    contraseña = password,
+                    context = context,
+                    navController = navController,
                     onError = { exception ->
-                        onError(exception.message ?: "Error desconocido")
+                        onError(exception.message ?: "Error al iniciar sesión")
                     }
                 )
             }
@@ -168,6 +195,7 @@ fun BotonEntrar(
     }
 }
 
+
 @Composable
 fun MensajeError(mensaje: String) {
     Text(
@@ -176,17 +204,24 @@ fun MensajeError(mensaje: String) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
+
     )
 }
 
 @Composable
-fun BotonOlvidoContrasena(onClick: () -> Unit) {
+fun ContrasenaOlvidada(onClick: () -> Unit) {
     TextButton(onClick = onClick) {
-        Text("¿Has olvidado tu contraseña?", color = Color.White)
+        Text("¿Has olvidado tu contraseña?",
+            modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally),
+            color = Color.White)
     }
+
 }
 
-@PreviewFontScale
+
+//@PreviewFontScale
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable

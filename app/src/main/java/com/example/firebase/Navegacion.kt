@@ -11,6 +11,7 @@ import com.example.firebase.presentacion.autentificacion.LoginPantalla
 import com.example.firebase.presentacion.autentificacion.RecuperarPantalla
 import com.example.firebase.presentacion.autentificacion.RegistroPantalla
 import com.example.firebase.presentacion.autentificacion.RolPantalla
+import com.example.firebase.presentacion.equipo.EquipoPantalla
 //import com.example.firebase.presentacion.equipo.EquipoPantalla
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.inicio.InicioPantalla
@@ -32,7 +33,7 @@ object Rutas {
 @Composable
 fun Navegacion(navHostController: NavHostController) {
 
-    val rutasSinFooter = listOf(Rutas.Inicio, Rutas.Login, Rutas.SignUp, Rutas.Recuperar)
+    val rutasSinFooter = listOf(Rutas.Inicio, Rutas.Login, Rutas.SignUp, Rutas.Recuperar, Rutas.Rol)
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
 
     Scaffold(
@@ -58,10 +59,14 @@ fun Navegacion(navHostController: NavHostController) {
             }
 
             composable(Rutas.Recuperar) {
-            RecuperarPantalla(navController = navHostController)
+                RecuperarPantalla(navController = navHostController)
         }
+            composable(Rutas.Rol) {
+                RolPantalla(navController = navHostController)
+            }
 
-            // Puedes seguir añadiendo:
+
+            // Pueden seguir añadiendo:
             composable(Rutas.Perfil) {
                 PerfilPantalla(navController = navHostController)
             }
@@ -69,13 +74,9 @@ fun Navegacion(navHostController: NavHostController) {
                 EventosPantalla(navController = navHostController)
             }
 
-            composable(Rutas.Rol) {
-                RolPantalla(navController = navHostController)
-            }
-
-/*            composable(Rutas.Equipo) {
+           composable(Rutas.Equipo) {
                 EquipoPantalla(navController = navHostController)
-            }*/
+            }
         }
     }
 }

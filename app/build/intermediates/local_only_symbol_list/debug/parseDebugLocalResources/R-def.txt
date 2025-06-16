@@ -23,6 +23,7 @@ drawable maat
 mipmap ic_launcher
 mipmap ic_launcher_foreground
 mipmap ic_launcher_round
+string android_cliente
 string app_name
 string com.google.firebase.crashlytics.mapping_file_id
 string default_web_client_id
