@@ -27,20 +27,13 @@ import com.example.firebase.presentacion.perfil.PerfilPantalla
 
 // IMPORTACIONES DE PANTALLAS DE EVENTOS
 import com.example.firebase.presentacion.evento.CrearEventoPantalla
-// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Descomenta si tienes esta pantalla
+// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Próxima actualización...
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.evento.ResumenEventosPantalla
 import com.example.firebase.presentacion.evento.SeleccionarParticipantesPantalla
 
 // IMPORTACIONES DE OTRAS PANTALLAS
 import com.example.firebase.presentacion.jugadores.GestionarJugadoresPantalla
-
-// IMPORTA TU FooterBar REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO
-// Ejemplo: import com.example.firebase.presentacion.common.FooterBar
-
-// IMPORTA TU RolPantalla REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO Y NO USAS EL PLACEHOLDER DE ABAJO
-// Ejemplo: import com.example.firebase.presentacion.rol.RolPantalla
-
 
 object Rutas {
     const val Inicio = "inicio"
@@ -79,9 +72,6 @@ fun Navegacion(navHostController: NavHostController) {
     Scaffold(
         bottomBar = {
             if (currentRoute !in rutasSinFooter) {
-                // Asegúrate de que este FooterBar sea el que quieres usar.
-                // Si tienes uno en `common`, se usará ese si lo importas.
-                // Si no importas ninguno y tienes el placeholder arriba, se usará ese.
                 FooterBar(navController = navHostController)
             }
         }
@@ -137,8 +127,6 @@ fun Navegacion(navHostController: NavHostController) {
 
             // --- Ruta para Selección de Rol ---
             composable(Rutas.Rol) {
-                // Esto usará el placeholder RolPantalla definido arriba.
-                // Reemplázalo o impórtalo si tu pantalla real está en otro lugar.
                 RolPantalla(navController = navHostController)
             }
 
@@ -147,20 +135,13 @@ fun Navegacion(navHostController: NavHostController) {
                 route = Rutas.DetallesEvento,
                 arguments = listOf(navArgument(Rutas.DetallesEventoArgName) {
                     type = NavType.StringType
-                    // Considera si el argumento puede ser nulo o no.
-                    // Si siempre debe estar presente, `nullable = false` (por defecto).
                 })
             ) { backStackEntry ->
                 val eventoId = backStackEntry.arguments?.getString(Rutas.DetallesEventoArgName)
                 if (eventoId != null) {
-                    // LLAMA A TU PANTALLA DE DETALLES DE EVENTO REAL AQUÍ
-                    // Ejemplo:
-                    // DetallesEventoPantalla(navController = navHostController, eventoId = eventoId)
                     Text("Detalles del Evento ID: $eventoId", modifier = Modifier.padding(16.dp)) // Placeholder
                 } else {
-                    // Manejar el caso donde el eventoId es nulo o no se proporciona
                     Text("Error: ID del evento no encontrado.", modifier = Modifier.padding(16.dp))
-                    // Considera navHostController.popBackStack() para volver si el ID es esencial
                 }
             }
         }
