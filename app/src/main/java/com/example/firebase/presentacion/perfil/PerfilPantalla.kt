@@ -1,5 +1,10 @@
 package com.example.firebase.presentacion.perfil
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.material3.*
+import androidx.navigation.compose.*
 import android.R
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -10,6 +15,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,10 +48,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.firebase.ui.theme.Grey
 import com.example.firebase.ui.theme.MidnightBlue
 import com.example.firebase.ui.theme.Secondary
+import com.google.firebase.auth.FirebaseAuth
 import java.nio.file.WatchEvent
 
 
-
+val currentUser = FirebaseAuth.getInstance().currentUser
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun PerfilPantalla(navController: NavHostController){
@@ -60,78 +67,125 @@ fun PerfilPantalla(navController: NavHostController){
                 )
             )
     ){
+
+
         val screenHeight = maxHeight
         val scrollState = rememberScrollState()
-        TextoMiperfil()
-        Spacer(modifier = Modifier.height(screenHeight * 0.18f))
+
+
+      TextoMiperfil()
+       Spacer(modifier = Modifier.height(screenHeight * 0.18f))
         Mainscreen()
         Spacer(modifier = Modifier.height(screenHeight * 0.28f))
-        FooterPerfil()
-    }
+        FooterPerfil(navController = navController)
 
-}
+            }
+        }
 
-@Composable
-fun FooterPerfil() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Button(onClick = {
-            // Aquí puedes limpiar datos de sesión
-            // Por ejemplo: viewModel.logout()
 
-            // Redirige a la pantalla de login
-            val navController = null
 
-            navController.navigate("login")
-        }) {
+
+// CORRECTO:
+@Composable // Asegúrate de que este Composable esté anotado
+fun FooterPerfil(navController: NavHostController) {
+    Box(
+        modifier = Modifier.fillMaxSize(), // Es buena práctica pasar el Modifier como parámetro
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = {
+                navController.navigate("inicio") {
+                    FirebaseAuth.getInstance().signOut()
+                }
+            }
+        ) {
             Text("Cerrar sesión")
         }
+    }
 }
-}
-
-private fun Nothing?.navigate(string: String) {}
-
 
 @Composable
 fun TextoMiperfil() {
-    Text(
-        modifier = Modifier.height(16.dp),
-        text = "Mi Perfil",
-        color = Yellow,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold
-    )
+        Text(
+            text = "MI PERFIL",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Secondary
+        )
 
 
-}
-
-@Composable
-fun Mainscreen() {
-
-    var  name by remember {
-        mutableStateOf(value = "")
-    }
-    var name2 by remember {
-        mutableStateOf(value = "Marc")
-    }
-    var  apellido by remember {
-        mutableStateOf(value = "")
-    }
-    var apellido2 by remember {
-        mutableStateOf(value = "Alegria")
-    }
-
-
-    Column {
-
-        TextField(value = name2, onValueChange = {name = it}, modifier = Modifier.padding(50.dp))
-        TextField(value = apellido2, onValueChange = {name = it},modifier = Modifier.padding(46.dp) )
-        TextField(value = apellido2, onValueChange = {name = it},modifier = Modifier.padding(46.dp) )
-        Button(onClick = {if (name.isNotBlank()){name2 = name} }) { Text(text = "Guardar")}
-    }
 
 }
 
 
+
+
+            @Composable
+            fun Mainscreen(
+                // Opcional: Podrías pasar los valores iniciales como parámetros
+                // initialName: String = "Marc",
+                // initialApellido: String = "Alegria"
+            ) {
+
+                // Estado para el nombre editable. Inicializado con "Marc"
+                var nombreInput by remember { mutableStateOf("Marc") }
+
+                // Estado para el apellido editable. Inicializado con "Alegria"
+                var apellidoInput by remember { mutableStateOf("Alegria") }
+
+                // Estados para almacenar los valores "guardados" (simulación)
+                // En una app real, estos podrían venir de un ViewModel o ser actualizados en Firebase.
+                var nombreGuardado by remember { mutableStateOf("Marc") }
+                var apellidoGuardado by remember { mutableStateOf("Alegria") }
+
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth() // Para que la columna ocupe el ancho disponible
+                        .padding(16.dp), // Padding general para el contenido de la columna
+                    horizontalAlignment = Alignment.CenterHorizontally // Centrar los elementos horizontalmente
+                ) {
+
+                    OutlinedTextField(
+                        value = nombreInput,
+                        onValueChange = { nombreInput = it }, // Actualiza el estado del nombre
+                        label = { Text("Nombre") },
+                        modifier = Modifier
+                            .fillMaxWidth() // Que el campo ocupe el ancho
+                            .padding(vertical = 8.dp) // Espaciado vertical
+                    )
+
+                    OutlinedTextField(
+                        value = apellidoInput,
+                        onValueChange = { apellidoInput = it }, // Actualiza el estado del apellido
+                        label = { Text("Apellido") },
+                        modifier = Modifier
+                            .fillMaxWidth() // Que el campo ocupe el ancho
+                            .padding(vertical = 8.dp) // Espaciado vertical
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp)) // Espacio antes del botón
+
+                    Button(
+                        onClick = {
+                            // Lógica para "guardar" los valores
+                            // En una app real, aquí llamarías a tu ViewModel o función para actualizar Firebase, etc.
+                            if (nombreInput.isNotBlank()) {
+                                nombreGuardado = nombreInput
+                                println("Nombre guardado: $nombreGuardado")
+                            }
+                            if (apellidoInput.isNotBlank()) {
+                                apellidoGuardado = apellidoInput
+                                println("Apellido guardado: $apellidoGuardado")
+                            }
+                            // Aquí podrías mostrar un mensaje de "Guardado con éxito" (Snackbar, Toast)
+                        },
+                        modifier = Modifier.fillMaxWidth() // Que el botón ocupe el ancho
+                    ) {
+                        Text(text = "Guardar")
+                    }
+                }
+            }
 
 @Preview(showBackground = true)
 @Composable
