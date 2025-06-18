@@ -37,31 +37,45 @@ import kotlinx.coroutines.delay
 @Composable
 fun EquipoPantalla(
  navController: NavHostController,
- userRole: String = "jugador" // Cambia esto según el rol del usuario actual
+ userRole: String = "jugador"
 ) {
- // Lista de imágenes para el carrusel
- val imageList = listOf(
-  R.drawable.equipo_imagen_1,
-  R.drawable.equipo_imagen_2,
-  R.drawable.equipo_imagen_3,
-  R.drawable.equipo_imagen_4
- )
+ val showPlaceholders = false
+
+ val imageList = if (showPlaceholders) {
+  listOf(1, 2, 3, 4)
+ } else {
+  listOf(
+   R.drawable.equipo_imagen_1,
+   R.drawable.equipo_imagen_2,
+   R.drawable.equipo_imagen_3,
+   R.drawable.equipo_imagen_4
+  )
+ }
 
  val pagerState = rememberPagerState(pageCount = { imageList.size })
 
- // Auto-scroll del carrusel
- LaunchedEffect(pagerState) {
-  while (true) {
-   delay(3000) // Cambia de imagen cada 3 segundos
-   val nextPage = (pagerState.currentPage + 1) % imageList.size
-   pagerState.animateScrollToPage(nextPage)
+ var isAutoScrollActive by remember { mutableStateOf(true) }
+
+ LaunchedEffect(pagerState, isAutoScrollActive) {
+  if (isAutoScrollActive && imageList.isNotEmpty()) {
+   while (isAutoScrollActive) {
+    delay(3000) // Cambia de imagen cada 3 segundos
+    if (isAutoScrollActive && pagerState.pageCount > 0) {
+     val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+     pagerState.animateScrollToPage(nextPage)
+    }
+   }
+  }
+ }
+
+ DisposableEffect(Unit) {
+  onDispose {
+   isAutoScrollActive = false
   }
  }
 
  Scaffold(
-  bottomBar = {
-   FooterBar(navController = navController)
-  }
+
  ) { innerPadding ->
   BoxWithConstraints(
    modifier = Modifier
@@ -142,7 +156,6 @@ fun EquipoPantalla(
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    // Carrusel de imágenes
     Box(
      modifier = Modifier
       .fillMaxWidth()
@@ -150,12 +163,52 @@ fun EquipoPantalla(
       .clip(RoundedCornerShape(12.dp))
       .background(Color.White.copy(alpha = 0.1f))
     ) {
-     HorizontalPager(
-      state = pagerState,
-      modifier = Modifier.fillMaxSize()
-     ) { page ->
-      // Placeholder para las imágenes
-      // Reemplaza esto con Image() cuando tengas las imágenes reales
+     if (imageList.isNotEmpty()) {
+      HorizontalPager(
+       state = pagerState,
+       modifier = Modifier.fillMaxSize()
+      ) { page ->
+       if (showPlaceholders) {
+        Box(
+         modifier = Modifier
+          .fillMaxSize()
+          .background(
+           Brush.horizontalGradient(
+            listOf(
+             Color.Blue.copy(alpha = 0.3f),
+             Color.Magenta.copy(alpha = 0.3f)
+            )
+           )
+          ),
+         contentAlignment = Alignment.Center
+        ) {
+         Column(
+          horizontalAlignment = Alignment.CenterHorizontally
+         ) {
+          Text(
+           text = "Imagen ${page + 1}",
+           color = Color.White,
+           fontSize = 24.sp,
+           fontWeight = FontWeight.Bold
+          )
+          Text(
+           text = "Equipo de fútbol",
+           color = Color.White.copy(alpha = 0.8f),
+           fontSize = 14.sp
+          )
+         }
+        }
+       } else {
+        val imageRes = imageList[page] as Int
+        Image(
+         painter = painterResource(id = imageRes),
+         contentDescription = "Imagen del equipo ${page + 1}",
+         modifier = Modifier.fillMaxSize(),
+         contentScale = ContentScale.Crop
+        )
+       }
+      }
+     } else {
       Box(
        modifier = Modifier
         .fillMaxSize()
@@ -163,42 +216,33 @@ fun EquipoPantalla(
        contentAlignment = Alignment.Center
       ) {
        Text(
-        text = "Imagen ${page + 1}",
+        text = "No hay imágenes disponibles",
         color = Color.White,
-        fontSize = 20.sp
+        fontSize = 18.sp
        )
       }
-
-      // Cuando tengas las imágenes, usa esto:
-      /*
-      Image(
-          painter = painterResource(id = imageList[page]),
-          contentDescription = "Imagen del equipo",
-          modifier = Modifier.fillMaxSize(),
-          contentScale = ContentScale.Crop
-      )
-      */
      }
     }
 
-    // Indicadores del carrusel
-    Row(
-     modifier = Modifier
-      .fillMaxWidth()
-      .padding(top = 8.dp),
-     horizontalArrangement = Arrangement.Center
-    ) {
-     repeat(imageList.size) { index ->
-      Box(
-       modifier = Modifier
-        .padding(horizontal = 4.dp)
-        .size(8.dp)
-        .clip(CircleShape)
-        .background(
-         if (pagerState.currentPage == index) Color.White
-         else Color.White.copy(alpha = 0.5f)
-        )
-      )
+    if (imageList.isNotEmpty()) {
+     Row(
+      modifier = Modifier
+       .fillMaxWidth()
+       .padding(top = 8.dp),
+      horizontalArrangement = Arrangement.Center
+     ) {
+      repeat(imageList.size) { index ->
+       Box(
+        modifier = Modifier
+         .padding(horizontal = 4.dp)
+         .size(8.dp)
+         .clip(CircleShape)
+         .background(
+          if (pagerState.currentPage == index) Color.White
+          else Color.White.copy(alpha = 0.5f)
+         )
+       )
+      }
      }
     }
 
