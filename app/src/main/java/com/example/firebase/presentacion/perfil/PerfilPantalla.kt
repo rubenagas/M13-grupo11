@@ -67,7 +67,7 @@ fun PerfilPantalla(navController: NavHostController){
                 )
             )
     ){
-
+//hola
 
         val screenHeight = maxHeight
         val scrollState = rememberScrollState()
