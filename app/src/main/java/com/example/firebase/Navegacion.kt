@@ -27,13 +27,14 @@ import com.example.firebase.presentacion.perfil.PerfilPantalla
 
 // IMPORTACIONES DE PANTALLAS DE EVENTOS
 import com.example.firebase.presentacion.evento.CrearEventoPantalla
-// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Próxima actualización...
+// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Descomenta si tienes esta pantalla
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.evento.ResumenEventosPantalla
 import com.example.firebase.presentacion.evento.SeleccionarParticipantesPantalla
 
 // IMPORTACIONES DE OTRAS PANTALLAS
 import com.example.firebase.presentacion.jugadores.GestionarJugadoresPantalla
+
 
 object Rutas {
     const val Inicio = "inicio"
@@ -61,6 +62,11 @@ object Rutas {
         return "$DetallesEventoBase/$eventoId"
     }
 }
+// Este bloque se encarga de manejar toda la navegación de la app.
+// Usa NavHostController para moverse entre pantallas como login, registro, perfil, eventos, etc.
+// Tiene un Scaffold que muestra el footer solo si la ruta actual NO está en la lista de "rutas sin footer".
+// Dentro del NavHost se definen todas las rutas de la app y se indica qué pantalla mostrar en cada una.
+// También maneja rutas especiales como "detalles de evento", donde se pasa un ID como argumento.
 
 @Composable
 fun Navegacion(navHostController: NavHostController) {
@@ -93,13 +99,14 @@ fun Navegacion(navHostController: NavHostController) {
             composable(Rutas.Recuperar) {
                 RecuperarPantalla(navController = navHostController)
             }
-            composable(Rutas.Rol) {
-                RolPantalla(navController = navHostController)
-            }
+            // composable(Rutas.Rol) { // ELIMINADA LA PRIMERA DEFINICIÓN REDUNDANTE
+            //     RolPantalla(navController = navHostController)
+            // }
             composable(Rutas.Perfil) {
                 PerfilPantalla(navController = navHostController)
             }
             composable(Rutas.Equipo) {
+                // Asegúrate que EquipoPantalla NO tiene su propio Scaffold con FooterBar
                 EquipoPantalla(navController = navHostController)
             }
 
@@ -126,7 +133,7 @@ fun Navegacion(navHostController: NavHostController) {
             }
 
             // --- Ruta para Selección de Rol ---
-            composable(Rutas.Rol) {
+            composable(Rutas.Rol) { // Esta es la única definición ahora
                 RolPantalla(navController = navHostController)
             }
 

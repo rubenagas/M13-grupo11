@@ -74,8 +74,21 @@ fun PerfilPantalla(navController: NavHostController){
 @Composable
 fun FooterPerfil() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "mi footer", color = White)}
+        Button(onClick = {
+            // Aquí puedes limpiar datos de sesión
+            // Por ejemplo: viewModel.logout()
+
+            // Redirige a la pantalla de login
+            val navController = null
+
+            navController.navigate("login")
+        }) {
+            Text("Cerrar sesión")
         }
+}
+}
+
+private fun Nothing?.navigate(string: String) {}
 
 
 @Composable
@@ -112,11 +125,11 @@ fun Mainscreen() {
 
         TextField(value = name2, onValueChange = {name = it}, modifier = Modifier.padding(50.dp))
         TextField(value = apellido2, onValueChange = {name = it},modifier = Modifier.padding(46.dp) )
-
+        TextField(value = apellido2, onValueChange = {name = it},modifier = Modifier.padding(46.dp) )
         Button(onClick = {if (name.isNotBlank()){name2 = name} }) { Text(text = "Guardar")}
-        }
-
     }
+
+}
 
 
 

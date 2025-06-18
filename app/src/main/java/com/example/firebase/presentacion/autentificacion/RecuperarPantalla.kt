@@ -1,7 +1,6 @@
 package com.example.firebase.presentacion.autentificacion
 
-import android.content.ContentValues.TAG
-import android.util.Log
+
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,9 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,9 +30,10 @@ import com.example.firebase.ui.theme.Surface
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-// Pantalla para recuperar contraseña. No conecta aún con Firebase (falta eso)
+// Pantalla para recuperar contraseña.
 @Composable
 fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = false) {
+    // Layout con fondo de gradiente para mejor diseño visual
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -44,6 +42,8 @@ fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = fal
         val screenHeight = maxHeight
         val scrollState = rememberScrollState()
         var email by remember { mutableStateOf("") }
+
+        // En Preview la app no corre de verdad, así que Firebase no puede inicializarse correctamente (no hay emulador, contexto ni usuario), por eso evitamos usar LocalContext aquí
         val context = if (!isPreview) LocalContext.current else null
 
         Column(
@@ -52,16 +52,19 @@ fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = fal
                 .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
-            Recuperar(navController)
+            // Título + botón atrás
+            RecuperarPantalla(navController)
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // Campo para introducir el correo electrónico
             CampEmail(email) { email = it }
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
             Spacer(modifier = Modifier.height(7.dp))
 
+            // Botón para enviar el correo de recuperación
             BttnEnviar(
                 email = email,
                 isPreview = isPreview,
@@ -77,9 +80,9 @@ fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = fal
     }
 }
 
-// Titulo mas botón atrás
+// Título + ícono de volver atrás
 @Composable
-fun Recuperar(navController: NavHostController) {
+fun RecuperarPantalla(navController: NavHostController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -101,7 +104,7 @@ fun Recuperar(navController: NavHostController) {
     }
 }
 
-// Campo para introducir el email del usuario
+// Campo de texto para capturar el email del usuario
 @Composable
 fun CampEmail(email: String, onCambio: (String) -> Unit) {
     Text(text = "Correo electrónico", color = Color.White)
@@ -114,13 +117,20 @@ fun CampEmail(email: String, onCambio: (String) -> Unit) {
     )
 }
 
-
-
+// Botón que envía correo de recuperación usando Firebase Auth
 @Composable
-fun BttnEnviar(email: String, isPreview: Boolean, context: android.content.Context?, onSuccess: () -> Unit, onError: (String) -> Unit) {
+fun BttnEnviar(
+    email: String,
+    isPreview: Boolean,
+    context: android.content.Context?,
+    onSuccess: () -> Unit,
+    onError: (String) -> Unit
+) {
     Button(
         onClick = {
+            // Solo enviamos si no estamos en preview, el email no está vacío, y el contexto es válido
             if (!isPreview && !email.isNullOrBlank() && context != null) {
+                // Enviamos correo de recuperación con Firebase Auth
                 Firebase.auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -142,11 +152,7 @@ fun BttnEnviar(email: String, isPreview: Boolean, context: android.content.Conte
     }
 }
 
-
-
-
-// Vista previa
-//@PreviewFontScale
+// Vista previa de la pantalla para diseño sin necesidad de emulador
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable

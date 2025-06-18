@@ -1,8 +1,5 @@
 package com.example.firebase.presentacion.autentificacion
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -30,17 +27,19 @@ import com.example.firebase.ui.theme.DarkIndigo
 import com.example.firebase.ui.theme.Grey
 import com.example.firebase.ui.theme.MidnightBlue
 import com.example.firebase.ui.theme.Surface
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
+// Pantalla principal de login con correo y contraseña
 @Composable
 fun LoginPantalla(navController: NavHostController, isPreview: Boolean = false) {
+    // En Preview la app no corre de verdad, así que Firebase no puede inicializarse correctamente (no hay emulador, contexto ni usuario), por eso evitamos usar LocalContext aquí
     val context = if (!isPreview) LocalContext.current else null
 
+    // Estados para formulario de login
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    // Fondo con gradiente visual y layout adaptado a altura de pantalla
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -55,24 +54,29 @@ fun LoginPantalla(navController: NavHostController, isPreview: Boolean = false) 
         val screenHeight = maxHeight
         val scrollState = rememberScrollState()
 
+        // Contenido de la pantalla
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
+            // Título + botón atrás
             TituloLogin("INICIA SESIÓN", navController)
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // Campo de correo electrónico
             Email(email) { email = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Campo de contraseña
             Contrasena(password) { password = it }
 
             Spacer(modifier = Modifier.height(screenHeight * 0.08f))
 
+            // Botón para iniciar sesión con validaciones
             Entrar(
                 email = email,
                 password = password,
@@ -84,24 +88,25 @@ fun LoginPantalla(navController: NavHostController, isPreview: Boolean = false) 
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Mostrar mensaje de error si existe
             errorMessage?.let { MensajeError(it) }
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // Enlace a pantalla de recuperación de contraseña
             ContrasenaOlvidada {
                 if (!isPreview) navController.navigate("recuperar")
             }
 
             Spacer(modifier = Modifier.height(24.dp)) // extra padding final
         }
-
     }
-    }
+}
 
-
+// Botón con ícono para volver atrás
 @Composable
-fun BotonAtrasL(navController: NavHostController){
-    IconButton(onClick = { navController.popBackStack()}) {
+fun BotonAtrasL(navController: NavHostController) {
+    IconButton(onClick = { navController.popBackStack() }) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "atras",
@@ -110,9 +115,9 @@ fun BotonAtrasL(navController: NavHostController){
     }
 }
 
+// Título principal + botón atrás
 @Composable
 fun TituloLogin(texto: String, navController: NavHostController) {
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -127,12 +132,11 @@ fun TituloLogin(texto: String, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.Start)
-            )
-        }
-
+        )
     }
+}
 
-
+// Campo para introducir el correo
 @Composable
 fun Email(email: String, onCambio: (String) -> Unit) {
     Text(text = "Correo electrónico", color = Color.White)
@@ -145,6 +149,7 @@ fun Email(email: String, onCambio: (String) -> Unit) {
     )
 }
 
+// Campo para introducir la contraseña con ocultamiento de texto
 @Composable
 fun Contrasena(password: String, onCambio: (String) -> Unit) {
     Text(text = "Contraseña", color = Color.White)
@@ -158,6 +163,7 @@ fun Contrasena(password: String, onCambio: (String) -> Unit) {
     )
 }
 
+// Botón que ejecuta el login con Firebase (basado en AuthService y Firebase Auth Docs)
 @Composable
 fun Entrar(
     email: String,
@@ -169,11 +175,13 @@ fun Entrar(
 ) {
     Button(
         onClick = {
+            // Validaciones básicas
             if (email.isBlank() || password.isBlank()) {
                 onError("Completa todos los campos")
                 return@Button
             }
 
+            // Login con Firebase solo si no estamos en preview
             if (!isPreview && context != null) {
                 AuthService.loginCorreo(
                     email = email,
@@ -195,7 +203,7 @@ fun Entrar(
     }
 }
 
-
+// Muestra el mensaje de error si existe
 @Composable
 fun MensajeError(mensaje: String) {
     Text(
@@ -204,24 +212,24 @@ fun MensajeError(mensaje: String) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
-
     )
 }
 
+// Enlace a la pantalla de recuperación de contraseña
 @Composable
 fun ContrasenaOlvidada(onClick: () -> Unit) {
     TextButton(onClick = onClick) {
-        Text("¿Has olvidado tu contraseña?",
+        Text(
+            "¿Has olvidado tu contraseña?",
             modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally),
-            color = Color.White)
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
+            color = Color.White
+        )
     }
-
 }
 
-
-//@PreviewFontScale
+// Vista previa del diseño de pantalla de login
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable

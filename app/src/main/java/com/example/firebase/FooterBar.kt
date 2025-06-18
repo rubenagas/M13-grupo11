@@ -25,6 +25,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.firebase.ui.theme.Secondary
 
 
+// Este bloque define el footer de la app, o sea, la barra de navegación inferior.
+// Tiene tres botones: uno para ir a la sección de Eventos, otro para Equipos y otro para Perfil.
+// Cada botón tiene un ícono personalizado (como una pestaña) y un texto debajo.
+// Todo está dentro de un BottomAppBar con fondo oscuro y una altura fija.
+
+
 @Composable
 fun FooterBar(navController: NavHostController) {
     BottomAppBar(
@@ -40,7 +46,7 @@ fun FooterBar(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            //  EVENTOS
+            //  // Botón para sección de EVENTOS
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 IconButton(onClick = { navController.navigate("eventos") }) {
                     Image(
@@ -52,7 +58,7 @@ fun FooterBar(navController: NavHostController) {
                 Text("Eventos", color = Secondary, fontSize = 12.sp)
             }
 
-            //  EQUIPOS
+            // Botón para sección de EQUIPOS
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 IconButton(onClick = { navController.navigate("equipo") }) {
                     Image(
@@ -64,7 +70,7 @@ fun FooterBar(navController: NavHostController) {
                 Text("Equipo", color = Secondary, fontSize = 12.sp)
             }
 
-            //  PERFIL
+            // Botón para sección de PERFIL
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 IconButton(onClick = { navController.navigate("perfil") }) {
                     Image(
@@ -80,7 +86,7 @@ fun FooterBar(navController: NavHostController) {
 }
 
 
-
+// Vista previa del FooterBar con un Scaffold de ejemplo
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaConFooter() {
@@ -90,7 +96,7 @@ fun PreviewPantallaConFooter() {
             FooterBar(navController = navController)
         }
     ) {
-        // Contenido de prueba
+        //  // Contenido de prueba (texto de ejemplo para ver cómo se ajusta con el footer)
         Text("Contenido de la pantalla", modifier = Modifier.padding(it))
     }
 }

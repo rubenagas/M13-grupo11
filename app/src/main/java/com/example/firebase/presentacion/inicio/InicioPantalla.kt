@@ -37,6 +37,9 @@ import com.example.firebase.ui.theme.Grey
 import com.example.firebase.ui.theme.MidnightBlue
 import com.example.firebase.ui.theme.Surface
 
+
+// la pantalla de inicio de la aplicacion MA·AT. Aqui se mostrara los botones de Registro, Inicio sesion y la posibilidad de iniciar /sesion y registrarse con google
+// ademas del logo de la app y un breve mensaje de bienvenida
 @Composable
 fun InicioPantalla(navController: NavHostController) {
 
@@ -44,6 +47,7 @@ fun InicioPantalla(navController: NavHostController) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
+    //Efecto que escucha cambios para iniciar sesión con Google usando AuthService.
     LaunchedEffect(activarLoginGoogle.value) {
         if (activarLoginGoogle.value) {
             Log.d("LoginGoogle", "arrancaa")
@@ -59,7 +63,7 @@ fun InicioPantalla(navController: NavHostController) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .background(
+            .background(    // Aplicacion de una gradiante vertical como fondo de pantalla.
                 Brush.verticalGradient(
                     listOf(Grey, MidnightBlue),
                     startY = 0f,
@@ -73,7 +77,7 @@ fun InicioPantalla(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState) //Permite que la pantalla sea desplazable verticalmente.
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -104,6 +108,7 @@ fun InicioPantalla(navController: NavHostController) {
     }
 }
 
+//Muestra el nombre de la app (MA·AT) y su logo (el logo se encuentra en formato .png en la carpeta drawable y en el mipmaap. Para que se tbm se adaptante esa imagen como logo del icono y de las notificaciones .
 @Composable
     fun LogoTitulo() {
         Text(
@@ -124,6 +129,8 @@ fun InicioPantalla(navController: NavHostController) {
         )
     }
 
+
+//Muestra un mensaje corto de bienvenida.
 @Composable
     fun TextoBienvenida() {
         Text(
@@ -142,6 +149,8 @@ fun InicioPantalla(navController: NavHostController) {
         )
     }
 
+
+//Botones para navegar a las pantallas de login por correo y registro.
 @Composable
     fun BotonesInicio(navController: NavHostController) {
         Button(
@@ -167,6 +176,7 @@ fun InicioPantalla(navController: NavHostController) {
         }
     }
 
+// Boton que permite login con Google, mostrando el ícono( en encuentra en la carpeta drawable)
 @Composable
     fun BotonGoogle(
         modifier: Modifier = Modifier,
