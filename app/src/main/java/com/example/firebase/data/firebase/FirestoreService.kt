@@ -1,55 +1,50 @@
 package com.example.firebase.data.firebase
 
+
+import android.annotation.SuppressLint
 import com.example.firebase.data.modelo.Usuario
 import com.google.firebase.firestore.FirebaseFirestore
 
+// Servicio para interactuar con Firebase Firestore (guardar y leer usuarios)
 object FirestoreService {
 
+    // Instancia de la base de datos Firestore
+    @SuppressLint("StaticFieldLeak")
     private val db = FirebaseFirestore.getInstance()
 
+    // Guarda un objeto Usuario en la colección "usuarios" con el ID del usuario como clave
     fun guardarUsuario(
         usuario: Usuario,
         onSuccess: () -> Unit,
         onError: (Exception) -> Unit
     ) {
         db.collection("usuarios")
-            .document(usuario.id)
-            .set(usuario)
-            .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { onError(it) }
+            .document(usuario.id) // usa el UID como ID del documento
+            .set(usuario) // guarda el objeto completo
+            .addOnSuccessListener { onSuccess() } // callback si salió bien
+            .addOnFailureListener { onError(it) }  // callback si hubo un error
     }
 
 
-    // MAAAAAAAAAAAAARC DEBES DE USAR ESTE METODO PARA MOSTRAR LA INFO DEL USUARIO
-    // Esta función sirve para obtener la información de un usuario desde la base de datos de Firebase Firestore.
-    // Por ejemplo, después de que el usuario haya iniciado sesión, quiero saber su nombre, año de nacimiento y rol.
-
-    //  Se usa el "uid", que es el identificador único del usuario que da Firebase cuando alguien se registra o inicia sesión.
-    //  Esta función trabaja de forma automática y nos avisa si va bien o si hay algún problema.
-
+    // marc si no lo usas borrralo
+    // Obtiene los datos del usuario desde Firestore usando su UID
     fun obtenerUsuario(
-        uid: String, // Aquí le paso el UID del usuario que quiero buscar
-        onSuccess: (Usuario) -> Unit, // Si todo va bien, se ejecuta esta parte y me da los datos del usuario
-        onError: (Exception) -> Unit  // Si algo sale mal, me muestra el error
+        uid: String, // UID del usuario (provisto por Firebase Auth)
+        onSuccess: (Usuario) -> Unit, // Se ejecuta si los datos fueron cargados correctamente
+        onError: (Exception) -> Unit  // Se ejecuta si ocurre un error
     ) {
-        // Voy a la colección llamada "usuarios" que está en Firestore
         db.collection("usuarios")
-            .document(uid) // Busco el documento que tiene como nombre el UID del usuario
-            .get() // Intento obtener ese documento
+            .document(uid) // Accede al documento que corresponde a ese UID
+            .get() // Intenta obtenerlo
             .addOnSuccessListener { doc ->
-                // Si lo consigo, intento convertir el documento en un objeto de tipo Usuario
-                val usuario = doc.toObject(Usuario::class.java)
+                val usuario = doc.toObject(Usuario::class.java) // convierte el documento en un objeto Usuario
 
-                // Si no está vacío (es decir, sí lo encontró), lo devuelvo con éxito
                 if (usuario != null) {
-                    onSuccess(usuario) // Aquí le paso el usuario a quien haya llamado esta función
+                    onSuccess(usuario) // usuario encontrado y convertido correctamente
                 } else {
-                    // Si no encontró nada, lanzo un mensaje de error
-                    onError(Exception("Usuario no encontrado"))
+                    onError(Exception("Usuario no encontrado")) // documento vacío o mal formateado
                 }
             }
-            // Si hubo un problema al intentar conectarse o buscar (como no hay internet), lo paso al onError
-            .addOnFailureListener { onError(it) }
+            .addOnFailureListener { onError(it) } // error al conectarse o consultar Firestore
     }
-
 }

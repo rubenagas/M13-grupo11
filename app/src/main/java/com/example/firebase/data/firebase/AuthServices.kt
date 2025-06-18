@@ -37,14 +37,15 @@ object AuthService {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
 
-    // REGISTRO con correo y contraseña
-    //delegga a q lo llames desde RegsitroPantalla
+    // Registro con correo y contraseña usando Firebase Auth
+    // Llamado desde RegistroPantalla
     fun registrarCorreo(email: String, contraseña: String, onSuccess: (FirebaseUser) -> Unit, onError: (Exception) -> Unit) {
         auth.createUserWithEmailAndPassword(email, contraseña)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    user?.sendEmailVerification() //envia un mensaje de verificación de dirección a un usuario. Documentacion.
+                    // Envía correo de verificación (documentado en Firebase Auth)
+                    user?.sendEmailVerification()
                         ?.addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Log.d(TAG, "Email sent.")
@@ -68,6 +69,7 @@ object AuthService {
                     val user = auth.currentUser
                     user?.reload()?.addOnSuccessListener {
                         if (user.isEmailVerified) {
+                            // Obtenemos el usuario desde Firestore para verificar si el perfil está completo
                             FirestoreService.obtenerUsuario(user.uid,
                                 onSuccess = { usuario ->
                                     val completo = !usuario.nombre.isNullOrBlank()
@@ -76,6 +78,7 @@ object AuthService {
 
                                     guardarSesion(context, email)
 
+                                    // navegamos según estado del perfil
                                     if (completo) {
                                         navController.navigate("eventos")
                                     } else {
@@ -105,10 +108,10 @@ object AuthService {
     }
 
 
-    // ya está logueado?? si lo esta, esto revisa si hay un usuario en Firebase
-    //me estoy quedando sin tiempo. finalizare el resto y esto lo agrego como un plus. sorry
-
-    fun sesionAbierta(): Boolean = auth.currentUser != null
+    //ya está logueado?? si lo esta, esto revisa si hay un usuario en Firebase
+    //me estoy quedando sin tiempo.No puede avanzar mas hasta que la pantalla perilpantalla marc lo haga
+    //porque necesito el botn cerrar sesion activo
+    //fun sesionAbierta(): Boolean = auth.currentUser != null
 
 
 
@@ -123,7 +126,7 @@ object AuthService {
         val clientId = context.getString(R.string.android_cliente)
 
         val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(clientId)
-            .setNonce("nonce")
+            .setNonce("nonce") // Se recomienda generar una nonce real para seguridad
             .build()
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(signInWithGoogleOption)
@@ -169,6 +172,7 @@ object AuthService {
                                 }
                             }
                     } catch (e: GoogleIdTokenParsingException) {
+                        // Registro del error con Crashlytics
                         FirebaseCrashlytics.getInstance().recordException(e)
                         Toast.makeText(context, "Token de Google inválido", Toast.LENGTH_LONG).show()
                     }
@@ -187,9 +191,9 @@ object AuthService {
         fun usuarioActual(): FirebaseUser? = auth.currentUser
 
 
-        // MARC ESTO TBM ES TUYO
-        // Cerrar sesión
-         fun cerrarSesion() {
+
+        // Cerrar sesión de firebase
+        fun cerrarSesion() {
                     auth.signOut()
 
                 }

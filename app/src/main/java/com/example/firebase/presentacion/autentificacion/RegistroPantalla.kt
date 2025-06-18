@@ -34,13 +34,17 @@ import com.example.firebase.ui.theme.Surface
 
 @Composable
 fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = false) {
+
+    // En Preview la app no corre de verdad, así que Firebase no puede inicializarse correctamente (no hay emulador, contexto ni usuario), por eso evitamos usar LocalContext aquí
     val context = if (!isPreview) LocalContext.current else null
 
+    // Estados para email, contraseña, confirmación y error
     var email by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
     var confirmar by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
 
+    // Contenedor principal con gradiente de fondo
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -55,6 +59,7 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
         val screenHeight = maxHeight
         val scrollState = rememberScrollState()
 
+        // Scroll en pantalla
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,20 +68,25 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
         ) {
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // Título + botón para volver
             TituloPantalla("CREA UNA CUENTA", navController)
             
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // de esta forma los siguieentes bloques utlizaran el mismo diseño de @composable BloqueRegistro
+            // Campo: Correo electrónico
             BloqueRegistro("Correo electrónico", email) { email = it }
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Campo: Contraseña
             BloqueRegistro("Contraseña", contrasena, esPassword = true) { contrasena = it }
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Campo: Confirmación de contraseña
             BloqueRegistro("Confirmar contraseña", confirmar, esPassword = true) { confirmar = it }
-
             Spacer(modifier = Modifier.height(screenHeight * 0.08f))
 
+            // Botón de registro
             BottContinuar {
                 if (isPreview) return@BottContinuar
 
@@ -111,6 +121,7 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            //muestra mensaje de error si este llega a pasar
             error?.let {
                 MensajeErrorRegistro(it)
             }
@@ -120,6 +131,7 @@ fun RegistroPantalla(navController: NavHostController, isPreview: Boolean = fals
 
 @Composable
 fun BotonAtras(navController: NavHostController){
+    // Botón de  atrás
     IconButton(onClick = { navController.popBackStack()}) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
@@ -131,6 +143,7 @@ fun BotonAtras(navController: NavHostController){
 
 @Composable
 fun TituloPantalla(texto: String, navController:NavHostController) {
+    // Encabezado con título y botón atrás
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -152,6 +165,7 @@ fun TituloPantalla(texto: String, navController:NavHostController) {
 
 @Composable
 fun BloqueRegistro(etiqueta: String, valor: String, esPassword: Boolean = false, onCambio: (String) -> Unit) {
+    // Campo reutilizable para email, contraseña y confirmar contraseñza
     Text(text = etiqueta, color = Color.White)
     Spacer(modifier = Modifier.height(4.dp))
     TextField(
@@ -165,6 +179,7 @@ fun BloqueRegistro(etiqueta: String, valor: String, esPassword: Boolean = false,
 
 @Composable
 fun BottContinuar(onClick: () -> Unit) {
+    // Botón para continuar el registro
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -178,6 +193,7 @@ fun BottContinuar(onClick: () -> Unit) {
 
 @Composable
 fun MensajeErrorRegistro(mensaje: String) {
+    // Muestra errores de validación
     Text(
         text = mensaje,
         color = MaterialTheme.colorScheme.error,
@@ -187,6 +203,7 @@ fun MensajeErrorRegistro(mensaje: String) {
     )
 }
 
+// Preview para ver el diseño sin emulador
 //@PreviewFontScale
 @PreviewScreenSizes
 @Preview(showBackground = true)

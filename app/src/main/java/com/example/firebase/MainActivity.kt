@@ -16,8 +16,12 @@ import androidx.navigation.findNavController
 import com.example.firebase.presentacion.inicio.InicioPantalla
 import com.example.firebase.ui.theme.FirebaseTheme
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
+// Esta es la clase que arranca la app.
+// Se inicializa Firebase y se prepara la navegación con Compose.
+// El tema se aplica, se crea el navController y se lanza la interfaz.
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +30,9 @@ class MainActivity : ComponentActivity() {
         // Inicializacion de Firebase
         FirebaseApp.initializeApp(this)
 
-        //Lectura de datos de sesionAbierta y guardado
-        val ref = getSharedPreferences("sharedpreferences", Context.MODE_PRIVATE)
-        val email = ref.getString("Email", null)
-
-        val sesion = email !=null
+        // Verifica si hay sesión activa con Firebase
+        val user = FirebaseAuth.getInstance().currentUser
+       // val startDestino = if (user != null) "eventos" else "inicio"
 
         setContent {
             val navController = rememberNavController()

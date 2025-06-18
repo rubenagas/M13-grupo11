@@ -35,12 +35,6 @@ import com.example.firebase.presentacion.evento.SeleccionarParticipantesPantalla
 // IMPORTACIONES DE OTRAS PANTALLAS
 import com.example.firebase.presentacion.jugadores.GestionarJugadoresPantalla
 
-// IMPORTA TU FooterBar REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO
-// Ejemplo: import com.example.firebase.presentacion.common.FooterBar
-
-// IMPORTA TU RolPantalla REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO Y NO USAS EL PLACEHOLDER DE ABAJO
-// Ejemplo: import com.example.firebase.presentacion.rol.RolPantalla
-
 
 object Rutas {
     const val Inicio = "inicio"
@@ -68,6 +62,11 @@ object Rutas {
         return "$DetallesEventoBase/$eventoId"
     }
 }
+// Este bloque se encarga de manejar toda la navegación de la app.
+// Usa NavHostController para moverse entre pantallas como login, registro, perfil, eventos, etc.
+// Tiene un Scaffold que muestra el footer solo si la ruta actual NO está en la lista de "rutas sin footer".
+// Dentro del NavHost se definen todas las rutas de la app y se indica qué pantalla mostrar en cada una.
+// También maneja rutas especiales como "detalles de evento", donde se pasa un ID como argumento.
 
 @Composable
 fun Navegacion(navHostController: NavHostController) {

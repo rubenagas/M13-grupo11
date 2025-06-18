@@ -34,13 +34,17 @@ import com.example.firebase.data.modelo.Usuario
 
 @Composable
 fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
+
+    // En Preview la app no corre de verdad, así que Firebase no puede inicializarse correctamente (no hay emulador, contexto ni usuario), por eso evitamos usar LocalContext aquí
     val context = if (!isPreview) LocalContext.current else null
 
+    //estos estados mantendran los datos del formulario.
     var nombre by remember { mutableStateOf("") }
     var anNacimiento by remember { mutableStateOf<String?>(null) }
     var rolSeleccionado by remember { mutableStateOf<String?>(null) }
     var mensajeError by remember { mutableStateOf<String?>(null) }
 
+    // Fondo con gradiente para estética visual
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +65,7 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
                 .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
-            // Título + botón atrás
+            // Encabezado con  el título + botón atrás
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -84,18 +88,22 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
+            // Campo de texto para el nombre
             TextoNombre(nombre) { nombre = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Selector de año de nacimiento
             Nacimiento(anNacimiento) { anNacimiento = it }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            //Selección de rol mediante radio buttons
             SeleccionRol(rolSeleccionado) { rolSeleccionado = it }
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Botón para guardar y mandar los datos al cloud firestore y navegar a perfil
             Button(
                 onClick = {
                     val user = AuthService.usuarioActual()
@@ -136,6 +144,7 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Mensaje de error si los campos no están completos o hay fallo al guardar
             mensajeError?.let {
                 Text(
                     text = it,
@@ -149,6 +158,7 @@ fun RolPantalla(navController: NavHostController, isPreview: Boolean = false) {
     }
 }
 
+// Campo para introducir el nombre del usuario
 @Composable
 fun TextoNombre(nombre: String, onCambio: (String) -> Unit) {
     Text(text = "Nombre", color = Color.White)
@@ -161,6 +171,7 @@ fun TextoNombre(nombre: String, onCambio: (String) -> Unit) {
     )
 }
 
+// Dropdown para seleccionar año de nacimiento
 @Composable
 fun Nacimiento(anioSelc: String?, onSeleccion: (String) -> Unit) {
     var xpan by remember { mutableStateOf(false) }
@@ -195,6 +206,8 @@ fun Nacimiento(anioSelc: String?, onSeleccion: (String) -> Unit) {
     }
 }
 
+
+// Componente para seleccionar el rol mediante radio buttons
 @Composable
 fun SeleccionRol(rolSeleccionado: String?, onRolSeleccionado: (String) -> Unit) {
     Text(text = "Rol", color = Color.White)
@@ -220,7 +233,8 @@ fun SeleccionRol(rolSeleccionado: String?, onRolSeleccionado: (String) -> Unit) 
     }
 }
 
-//@PreviewFontScale
+// Vista previa de la pantalla para desarrollo visual sin emulador
+//@PreviewFontScale ; lo retire despues de visualizar el idseño en distintos tamaños de pantalla
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable
