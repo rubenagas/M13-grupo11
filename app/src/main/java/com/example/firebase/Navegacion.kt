@@ -79,9 +79,6 @@ fun Navegacion(navHostController: NavHostController) {
     Scaffold(
         bottomBar = {
             if (currentRoute !in rutasSinFooter) {
-                // Asegúrate de que este FooterBar sea el que quieres usar.
-                // Si tienes uno en `common`, se usará ese si lo importas.
-                // Si no importas ninguno y tienes el placeholder arriba, se usará ese.
                 FooterBar(navController = navHostController)
             }
         }
@@ -103,13 +100,14 @@ fun Navegacion(navHostController: NavHostController) {
             composable(Rutas.Recuperar) {
                 RecuperarPantalla(navController = navHostController)
             }
-            composable(Rutas.Rol) {
-                RolPantalla(navController = navHostController)
-            }
+            // composable(Rutas.Rol) { // ELIMINADA LA PRIMERA DEFINICIÓN REDUNDANTE
+            //     RolPantalla(navController = navHostController)
+            // }
             composable(Rutas.Perfil) {
                 PerfilPantalla(navController = navHostController)
             }
             composable(Rutas.Equipo) {
+                // Asegúrate que EquipoPantalla NO tiene su propio Scaffold con FooterBar
                 EquipoPantalla(navController = navHostController)
             }
 
@@ -136,9 +134,7 @@ fun Navegacion(navHostController: NavHostController) {
             }
 
             // --- Ruta para Selección de Rol ---
-            composable(Rutas.Rol) {
-                // Esto usará el placeholder RolPantalla definido arriba.
-                // Reemplázalo o impórtalo si tu pantalla real está en otro lugar.
+            composable(Rutas.Rol) { // Esta es la única definición ahora
                 RolPantalla(navController = navHostController)
             }
 
@@ -147,20 +143,13 @@ fun Navegacion(navHostController: NavHostController) {
                 route = Rutas.DetallesEvento,
                 arguments = listOf(navArgument(Rutas.DetallesEventoArgName) {
                     type = NavType.StringType
-                    // Considera si el argumento puede ser nulo o no.
-                    // Si siempre debe estar presente, `nullable = false` (por defecto).
                 })
             ) { backStackEntry ->
                 val eventoId = backStackEntry.arguments?.getString(Rutas.DetallesEventoArgName)
                 if (eventoId != null) {
-                    // LLAMA A TU PANTALLA DE DETALLES DE EVENTO REAL AQUÍ
-                    // Ejemplo:
-                    // DetallesEventoPantalla(navController = navHostController, eventoId = eventoId)
                     Text("Detalles del Evento ID: $eventoId", modifier = Modifier.padding(16.dp)) // Placeholder
                 } else {
-                    // Manejar el caso donde el eventoId es nulo o no se proporciona
                     Text("Error: ID del evento no encontrado.", modifier = Modifier.padding(16.dp))
-                    // Considera navHostController.popBackStack() para volver si el ID es esencial
                 }
             }
         }

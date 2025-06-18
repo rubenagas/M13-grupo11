@@ -49,49 +49,51 @@ fun CrearEventoPantalla(navController: NavHostController) {
     var direccion by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "CREAR EVENTO",
-                        color = Secondary,
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Volver",
-                            tint = Secondary
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent, // Correcto para hacer el fondo transparente
-                    titleContentColor = Secondary,      // Opcional: Color del título si es diferente
-                    navigationIconContentColor = Secondary // Opcional: Color del ícono de navegación
+    // Aplicar el gradiente de fondo a toda la pantalla
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    listOf(Grey, MidnightBlue),
+                    startY = 0f,
+                    endY = 600f
                 )
             )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Grey, MidnightBlue),
-                        startY = 0f,
-                        endY = 600f
+    ) {
+        Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            containerColor = Color.Transparent, // Hacer el Scaffold transparente
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "CREAR EVENTO",
+                            color = Secondary,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Volver",
+                                tint = Secondary
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent,
+                        titleContentColor = Secondary,
+                        navigationIconContentColor = Secondary
                     )
                 )
-        ) {
+            }
+        ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(innerPadding)
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
