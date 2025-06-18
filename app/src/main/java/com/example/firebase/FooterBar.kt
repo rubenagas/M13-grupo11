@@ -54,14 +54,14 @@ fun FooterBar(navController: NavHostController) {
 
             //  EQUIPOS
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                IconButton(onClick = { navController.navigate("equipos") }) {
+                IconButton(onClick = { navController.navigate("equipo") }) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_action_equipo),
-                        contentDescription = "Equipos",
+                        contentDescription = "Equipo",
                         modifier = Modifier.size(28.dp)
                     )
                 }
-                Text("Equipos", color = Secondary, fontSize = 12.sp)
+                Text("Equipo", color = Secondary, fontSize = 12.sp)
             }
 
             //  PERFIL

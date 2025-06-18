@@ -27,20 +27,13 @@ import com.example.firebase.presentacion.perfil.PerfilPantalla
 
 // IMPORTACIONES DE PANTALLAS DE EVENTOS
 import com.example.firebase.presentacion.evento.CrearEventoPantalla
-// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Descomenta si tienes esta pantalla
+// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Próxima actualización...
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.evento.ResumenEventosPantalla
 import com.example.firebase.presentacion.evento.SeleccionarParticipantesPantalla
 
 // IMPORTACIONES DE OTRAS PANTALLAS
 import com.example.firebase.presentacion.jugadores.GestionarJugadoresPantalla
-
-// IMPORTA TU FooterBar REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO
-// Ejemplo: import com.example.firebase.presentacion.common.FooterBar
-
-// IMPORTA TU RolPantalla REAL AQUÍ SI ESTÁ EN OTRO ARCHIVO Y NO USAS EL PLACEHOLDER DE ABAJO
-// Ejemplo: import com.example.firebase.presentacion.rol.RolPantalla
-
 
 object Rutas {
     const val Inicio = "inicio"
@@ -100,14 +93,13 @@ fun Navegacion(navHostController: NavHostController) {
             composable(Rutas.Recuperar) {
                 RecuperarPantalla(navController = navHostController)
             }
-            // composable(Rutas.Rol) { // ELIMINADA LA PRIMERA DEFINICIÓN REDUNDANTE
-            //     RolPantalla(navController = navHostController)
-            // }
+            composable(Rutas.Rol) {
+                RolPantalla(navController = navHostController)
+            }
             composable(Rutas.Perfil) {
                 PerfilPantalla(navController = navHostController)
             }
             composable(Rutas.Equipo) {
-                // Asegúrate que EquipoPantalla NO tiene su propio Scaffold con FooterBar
                 EquipoPantalla(navController = navHostController)
             }
 
@@ -134,7 +126,7 @@ fun Navegacion(navHostController: NavHostController) {
             }
 
             // --- Ruta para Selección de Rol ---
-            composable(Rutas.Rol) { // Esta es la única definición ahora
+            composable(Rutas.Rol) {
                 RolPantalla(navController = navHostController)
             }
 

@@ -49,7 +49,7 @@ fun CrearEventoPantalla(navController: NavHostController) {
     var direccion by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
 
-    // Aplicar el gradiente de fondo a toda la pantalla
+    // 🔥 USAR BOX EN LUGAR DE SCAFFOLD
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,39 +61,39 @@ fun CrearEventoPantalla(navController: NavHostController) {
                 )
             )
     ) {
-        Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            containerColor = Color.Transparent, // Hacer el Scaffold transparente
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            "CREAR EVENTO",
-                            color = Secondary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Volver",
-                                tint = Secondary
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent,
-                        titleContentColor = Secondary,
-                        navigationIconContentColor = Secondary
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // 🔥 TOPAPPBAR PERSONALIZADO
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .statusBarsPadding(), // Para el espacio de la barra de estado
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { navController.navigateUp() }
+                ) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Volver",
+                        tint = Secondary
                     )
+                }
+                Text(
+                    text = "CREAR EVENTO",
+                    color = Secondary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
-        ) { innerPadding ->
+
+            // 🔥 CONTENIDO PRINCIPAL
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -140,6 +140,13 @@ fun CrearEventoPantalla(navController: NavHostController) {
                     )
                 }
             }
+        }
+
+        // SnackbarHost en la parte inferior
+        Box(
+            modifier = Modifier.align(Alignment.BottomCenter)
+        ) {
+            SnackbarHost(snackbarHostState)
         }
     }
 }
