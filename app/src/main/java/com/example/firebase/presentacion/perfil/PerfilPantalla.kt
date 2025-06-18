@@ -78,7 +78,7 @@ fun PerfilPantalla(navController: NavHostController){
         Mainscreen()
         Spacer(modifier = Modifier.height(screenHeight * 0.28f))
         FooterPerfil(navController = navController)
-
+//sssss
             }
         }
 
