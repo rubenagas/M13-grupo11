@@ -27,7 +27,7 @@ import com.example.firebase.presentacion.perfil.PerfilPantalla
 
 // IMPORTACIONES DE PANTALLAS DE EVENTOS
 import com.example.firebase.presentacion.evento.CrearEventoPantalla
-// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Descomenta si tienes esta pantalla
+// import com.example.firebase.presentacion.evento.DetallesEventoPantalla // Próxima actualización
 import com.example.firebase.presentacion.evento.EventosPantalla
 import com.example.firebase.presentacion.evento.ResumenEventosPantalla
 import com.example.firebase.presentacion.evento.SeleccionarParticipantesPantalla

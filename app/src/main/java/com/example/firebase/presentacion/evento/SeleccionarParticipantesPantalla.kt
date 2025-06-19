@@ -30,6 +30,7 @@ import com.example.firebase.data.local.LocalStorageManager
 import kotlinx.coroutines.launch
 import com.example.firebase.presentacion.evento.Evento
 import java.util.UUID
+import androidx.compose.foundation.layout.statusBarsPadding
 
 // Modelo de datos para los jugadores
 data class Jugador(
@@ -130,7 +131,7 @@ fun SeleccionarParticipantesPantalla(navController: NavHostController) {
         }
     }
 
-    // Aplicar el gradiente de fondo a toda la pantalla
+    // 🔥 USAR BOX EN LUGAR DE SCAFFOLD
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -142,38 +143,39 @@ fun SeleccionarParticipantesPantalla(navController: NavHostController) {
                 )
             )
     ) {
-        Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            containerColor = Color.Transparent, // Hacer el Scaffold transparente
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            "EVENTOS",
-                            color = Secondary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                Icons.Default.ArrowBack,
-                                contentDescription = "Volver",
-                                tint = Secondary
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // 🔥 TOPAPPBAR PERSONALIZADO
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .statusBarsPadding(), // Para el espacio de la barra de estado
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { navController.navigateUp() }
+                ) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Volver",
+                        tint = Secondary
                     )
+                }
+                Text(
+                    text = "EVENTOS",
+                    color = Secondary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
-        ) { innerPadding ->
+
+            // 🔥 RESTO DEL CONTENIDO
             if (isCreatingEvent) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(color = Secondary)
@@ -182,7 +184,6 @@ fun SeleccionarParticipantesPantalla(navController: NavHostController) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding)
                         .padding(16.dp)
                 ) {
                     Text(
@@ -379,6 +380,13 @@ fun SeleccionarParticipantesPantalla(navController: NavHostController) {
                     }
                 }
             }
+        }
+
+        // SnackbarHost en la parte inferior
+        Box(
+            modifier = Modifier.align(Alignment.BottomCenter)
+        ) {
+            SnackbarHost(snackbarHostState)
         }
     }
 }
