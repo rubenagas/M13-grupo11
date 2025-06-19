@@ -69,7 +69,7 @@ object Rutas {
 // También maneja rutas especiales como "detalles de evento", donde se pasa un ID como argumento.
 
 @Composable
-fun Navegacion(navHostController: NavHostController) {
+fun Navegacion(navHostController: NavHostController, startDestino: String) {
 
     val rutasSinFooter = listOf(Rutas.Inicio, Rutas.Login, Rutas.SignUp, Rutas.Recuperar, Rutas.Rol)
     val navBackStackEntry = navHostController.currentBackStackEntryAsState()
@@ -84,7 +84,7 @@ fun Navegacion(navHostController: NavHostController) {
     ) { paddingValues ->
         NavHost(
             navController = navHostController,
-            startDestination = Rutas.Inicio,
+            startDestination = startDestino,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Rutas.Inicio) {
@@ -99,14 +99,16 @@ fun Navegacion(navHostController: NavHostController) {
             composable(Rutas.Recuperar) {
                 RecuperarPantalla(navController = navHostController)
             }
-            // composable(Rutas.Rol) { // ELIMINADA LA PRIMERA DEFINICIÓN REDUNDANTE
-            //     RolPantalla(navController = navHostController)
-            // }
+            composable(Rutas.Rol) {
+                 RolPantalla(navController = navHostController)
+             }
+
+
             composable(Rutas.Perfil) {
                 PerfilPantalla(navController = navHostController)
             }
             composable(Rutas.Equipo) {
-                // Asegúrate que EquipoPantalla NO tiene su propio Scaffold con FooterBar
+                // Asegurense que EquipoPantalla NO tiene su propio Scaffold con FooterBar
                 EquipoPantalla(navController = navHostController)
             }
 

@@ -110,7 +110,7 @@ object AuthService {
 
     //ya está logueado?? si lo esta, esto revisa si hay un usuario en Firebase
     //me estoy quedando sin tiempo.No puede avanzar mas hasta que la pantalla perilpantalla marc lo haga
-    //porque necesito el botn cerrar sesion activo
+    //porque necesito el botn cerrar sesion activo. lo dejare para futruas mejoras
     //fun sesionAbierta(): Boolean = auth.currentUser != null
 
 
