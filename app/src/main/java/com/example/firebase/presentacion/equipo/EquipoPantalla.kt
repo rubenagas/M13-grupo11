@@ -36,8 +36,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EquipoPantalla(
- navController: NavHostController,
- userRole: String = "jugador"
+ navController: NavHostController
 ) {
  val showPlaceholders = false
 
@@ -107,29 +106,7 @@ fun EquipoPantalla(
      modifier = Modifier.align(Alignment.Start)
     )
 
-    Spacer(modifier = Modifier.height(8.dp))
-
-    // Botón "+Invitar a miembros" solo para entrenador
-    if (userRole == "entrenador") {
-     Button(
-      onClick = { /* Acción para invitar miembros */ },
-      modifier = Modifier
-       .fillMaxWidth()
-       .height(40.dp),
-      colors = ButtonDefaults.buttonColors(
-       containerColor = Color.White,
-       contentColor = Color.Black
-      ),
-      shape = RoundedCornerShape(20.dp)
-     ) {
-      Text(
-       text = "+Invitar a miembros",
-       fontSize = 14.sp
-      )
-     }
-    }
-
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(24.dp))
 
     // Sección "Miembros del equipo" con botón "Ver Todo"
     Row(
@@ -156,6 +133,7 @@ fun EquipoPantalla(
 
     Spacer(modifier = Modifier.height(16.dp))
 
+    // Carrusel de imágenes
     Box(
      modifier = Modifier
       .fillMaxWidth()
@@ -224,6 +202,7 @@ fun EquipoPantalla(
      }
     }
 
+    // Indicadores del carrusel
     if (imageList.isNotEmpty()) {
      Row(
       modifier = Modifier
@@ -248,18 +227,10 @@ fun EquipoPantalla(
 
     Spacer(modifier = Modifier.height(24.dp))
 
-    // Tarjetas de información según el rol
-    if (userRole == "jugador") {
-     // Vista del jugador
-     MiembrosTarjeta()
-     Spacer(modifier = Modifier.height(16.dp))
-     CajaTarjeta()
-    } else {
-     // Vista del entrenador
-     MiembrosTarjeta()
-     Spacer(modifier = Modifier.height(16.dp))
-     CajaEntrenadorTarjeta()
-    }
+    // Tarjetas de información
+    MiembrosTarjeta()
+    Spacer(modifier = Modifier.height(16.dp))
+    CajaTarjeta()
 
     Spacer(modifier = Modifier.weight(1f))
    }
@@ -333,49 +304,9 @@ fun CajaTarjeta() {
  }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun CajaEntrenadorTarjeta() {
- Card(
-  modifier = Modifier
-   .fillMaxWidth()
-   .height(80.dp),
-  colors = CardDefaults.cardColors(
-   containerColor = Color.White.copy(alpha = 0.9f)
-  ),
-  shape = RoundedCornerShape(12.dp)
- ) {
-  Column(
-   modifier = Modifier
-    .fillMaxSize()
-    .padding(16.dp),
-   verticalArrangement = Arrangement.Center
-  ) {
-   Text(
-    text = "Caja",
-    fontSize = 16.sp,
-    fontWeight = FontWeight.Medium,
-    color = Color.Gray
-   )
-   Text(
-    text = "Saldo:....",
-    fontSize = 14.sp,
-    color = Color.Gray,
-    textAlign = TextAlign.Center
-   )
-  }
- }
-}
-
-@Preview(showBackground = true, name = "Vista Jugador")
-@Composable
-fun PreviewEquipoPantallaJugador() {
+fun PreviewEquipoPantalla() {
  val navController = rememberNavController()
- EquipoPantalla(navController, userRole = "jugador")
-}
-
-@Preview(showBackground = true, name = "Vista Entrenador")
-@Composable
-fun PreviewEquipoPantallaEntrenador() {
- val navController = rememberNavController()
- EquipoPantalla(navController, userRole = "entrenador")
+ EquipoPantalla(navController)
 }
