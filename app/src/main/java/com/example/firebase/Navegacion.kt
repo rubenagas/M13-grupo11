@@ -15,7 +15,7 @@ import androidx.navigation.navArgument
 
 // IMPORTACIONES DE PANTALLAS DE AUTENTICACIÓN
 import com.example.firebase.presentacion.autentificacion.LoginPantalla
-import com.example.firebase.presentacion.autentificacion.RecuperarPantalla
+import com.example.firebase.presentacion.autentificacion.Recuperar
 import com.example.firebase.presentacion.autentificacion.RegistroPantalla
 import com.example.firebase.presentacion.autentificacion.RolPantalla
 
@@ -97,7 +97,7 @@ fun Navegacion(navHostController: NavHostController, startDestino: String) {
                 RegistroPantalla(navController = navHostController)
             }
             composable(Rutas.Recuperar) {
-                RecuperarPantalla(navController = navHostController)
+                Recuperar(navController = navHostController)
             }
             composable(Rutas.Rol) {
                  RolPantalla(navController = navHostController)

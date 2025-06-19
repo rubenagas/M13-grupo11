@@ -32,7 +32,7 @@ import com.google.firebase.ktx.Firebase
 
 // Pantalla para recuperar contraseña.
 @Composable
-fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = false) {
+fun Recuperar(navController: NavHostController, isPreview: Boolean = false) {
     // Layout con fondo de gradiente para mejor diseño visual
     BoxWithConstraints(
         modifier = Modifier
@@ -53,7 +53,7 @@ fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = fal
                 .padding(16.dp)
         ) {
             // Título + botón atrás
-            RecuperarPantalla(navController)
+            Recuperacion(navController)
 
             Spacer(modifier = Modifier.height(screenHeight * 0.05f))
 
@@ -82,7 +82,7 @@ fun RecuperarPantalla(navController: NavHostController, isPreview: Boolean = fal
 
 // Título + ícono de volver atrás
 @Composable
-fun RecuperarPantalla(navController: NavHostController) {
+fun Recuperacion(navController: NavHostController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -158,5 +158,5 @@ fun BttnEnviar(
 @Composable
 fun PreviewRecuperarPantalla() {
     val navController = rememberNavController()
-    RecuperarPantalla(navController = navController, isPreview = true)
+    Recuperar(navController = navController, isPreview = true)
 }
